@@ -30,7 +30,7 @@ async function fetchPatchNotes(req) {
                 version: $element.attr('aria-label').replace(' Notes', ''),
                 date: $element.find('time').attr('datetime'),
                 description: $element.find('[data-testid="rich-text-html"] div').text(),
-                imageUrl: $element.find('img').attr('src'),
+                imageUrl: $element.find('.innerWrapper img').attr('src'),
                 url: $element.attr('href')
             };
             
@@ -40,10 +40,10 @@ async function fetchPatchNotes(req) {
                 description: patchInfo.description,
                 url: patchInfo.url.startsWith('http') ? patchInfo.url : `https://www.leagueoflegends.com${patchInfo.url}`,
                 date: new Date(patchInfo.date),
-                enclosure: {
+                enclosure: patchInfo.imageUrl ? {
                     url: patchInfo.imageUrl,
                     type: 'image/jpeg'
-                }
+                } : undefined
             });
         });
 
