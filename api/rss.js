@@ -2,14 +2,20 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const RSS = require('rss');
 
-async function fetchPatchNotes() {
+async function fetchPatchNotes(req) {
     try {
         const response = await axios.get('https://www.leagueoflegends.com/en-us/news/tags/patch-notes/');
         const $ = cheerio.load(response.data);
+        
+        // 获取当前请求的URL
+        const protocol = req.headers['x-forwarded-proto'] || 'http';
+        const host = req.headers['x-forwarded-host'] || req.headers.host;
+        const feedUrl = `${protocol}://${host}/api/rss`;
+        
         const feed = new RSS({
             title: 'League of Legends Patch Notes',
             description: 'Latest League of Legends patch notes',
-            feed_url: 'https://your-vercel-domain.vercel.app/api/rss',
+            feed_url: feedUrl,
             site_url: 'https://www.leagueoflegends.com/en-us/news/tags/patch-notes/',
             language: 'en',
             pubDate: new Date(),
@@ -51,7 +57,7 @@ async function fetchPatchNotes() {
 // Vercel API 路由处理函数
 module.exports = async (req, res) => {
     try {
-        const rssFeed = await fetchPatchNotes();
+        const rssFeed = await fetchPatchNotes(req);
         res.setHeader('Content-Type', 'application/xml');
         res.status(200).send(rssFeed);
     } catch (error) {

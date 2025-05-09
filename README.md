@@ -1,38 +1,36 @@
-# League of Legends Patch Notes RSS Generator
+# League of Legends Patch Notes RSS Feed
 
-这是一个简单的 Node.js 应用程序，用于抓取英雄联盟官方网站的补丁说明并生成 RSS 订阅源。
+这是一个英雄联盟补丁说明的RSS订阅源，部署在Vercel上。
 
-## 功能特点
+## 功能
 
-- 自动抓取最新的补丁说明
-- 生成标准 RSS 订阅源
-- 提供 HTTP 接口访问 RSS 内容
+- 自动抓取英雄联盟官方补丁说明
+- 生成RSS订阅源
+- 支持图片和详细描述
 
-## 安装
+## 部署
 
-1. 克隆此仓库
-2. 安装依赖：
+1. Fork 这个仓库
+2. 在 [Vercel](https://vercel.com) 上导入你的仓库
+3. 部署完成后，你的RSS订阅地址将是：`https://你的域名/api/rss`
+
+## 本地开发
+
 ```bash
+# 安装依赖
 npm install
+
+# 本地运行
+npm run dev
 ```
-
-## 使用方法
-
-1. 启动服务器：
-```bash
-npm start
-```
-
-2. 访问 RSS 订阅源：
-打开浏览器访问 `http://localhost:3000/rss`
 
 ## 技术栈
 
 - Node.js
-- Express.js
 - Axios
 - Cheerio
 - RSS
+- Vercel Serverless Functions
 
 ## 注意事项
 
